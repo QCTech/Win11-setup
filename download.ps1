@@ -1,0 +1,3 @@
+Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/initialCleanup.ps1  -outfile $baseDirectory\initialCleanup.ps1
+Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/initialCleanup.bat  -outfile $baseDirectory\initialCleanup.bat
+Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/customise.ps1  -outfile $baseDirectory\customise.ps1

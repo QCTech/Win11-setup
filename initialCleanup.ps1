@@ -59,6 +59,20 @@ powercfg /change hibernate-timeout-ac 0
 	choco install $baseDirectory\defaultPrograms.config -y
 
 ### Remove Crap
+    # Specific target for MS Teams
+    If ($null -eq (Get-AppxPackage -Name MicrosoftTeams -AllUsers)) {
+        Write-Output “Microsoft Teams Personal App not present.”
+    }
+    Else {
+        Try {
+            Write-Output “Removing Microsoft Teams Personal App.”
+            Get-AppxPackage -Name MicrosoftTeams -AllUsers | Remove-AppPackage -AllUsers
+        }
+        catch {
+            Write-Output “Error removing Microsoft Teams Personal App.”
+        }
+    }
+
     # Get rid if the per user stuff first
     Get-AppxPackage -allusers | Where-Object name -notlike "Microsoft.WindowsStore" | Where-Object name -notlike "Microsoft.WindowsCalculator" | Where-Object name -notlike "Microsoft.MicrosoftStickyNotes" | Where-Object name -notlike "Microsoft.Windows.Photos" | Remove-AppPackage
 
