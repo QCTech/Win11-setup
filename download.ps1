@@ -20,4 +20,10 @@ Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/mast
 write-host "Downloading customise.ps1."
 Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/customise.ps1  -outfile $baseDirectory\customise.ps1
 
+write-host "Downloading initialCleanup-intune.bat."
+Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/initialCleanup-intune.bat  -outfile $baseDirectory\initialCleanup-intune.bat
+
+write-host "Downloading initialCleanup-intune.ps1."
+Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/initialCleanup-intune.ps1  -outfile $baseDirectory\initialCleanup-intune.ps1
+
 write-host "Please now run the initialCleanup.bat file."
