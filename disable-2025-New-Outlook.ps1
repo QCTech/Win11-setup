@@ -122,17 +122,30 @@ write-host "Started 3/5 - disable retries" -foregroundcolor Black -backgroundcol
 
 # Remove the fucker
 write-host "Started 4/5 - Remove new outlook" -foregroundcolor Black -backgroundcolor Yellow
-if (Get-AppxPackage Microsoft.OutlookForWindows){
-    write-host "package exists (booo), removing (yay)"
-    Remove-AppxProvisionedPackage -AllUsers -Online -PackageName (Get-AppxPackage Microsoft.OutlookForWindows).PackageFullName
-    }
-if (Get-AppxPackage Microsoft.OutlookForWindows){
-    write-host "For some reason it wasn't removed(booo) exiting"
+# Start by removing the provisioned / installed copies
+if (Get-AppxPackage -allusers | where-object name -like 'Microsoft.outlookforwindows'){
+    write-host "At least one copy found provisioned or installed... nuke it!"
+    Get-AppxPackage -allusers | where-object name -like 'Microsoft.outlookforwindows' | remove-apppackage -allusers
+} else {
+    write-host "good news, no one seems to have been had yet"
+}
+# Double check
+if (Get-AppxPackage -allusers | where-object name -like 'Microsoft.outlookforwindows'){
+    write-host "Our attempt to cleanse the system failed. Manual intervention required"
     exit
-    } else {
-    write-host "package is not installed (yay)"
-    }
+}
 
+# Now make sure that the provisionedpackage isn't available so new users don't get it by default
+if (Get-AppxprovisionedPackage -online |where-object displayname -eq "Microsoft.OutlookForWindows"){
+    write-host "The provisioning package Exists, lets fix that"
+    Get-AppxprovisionedPackage -online | where-object displayname -eq "Microsoft.OutlookForWindows" | Remove-AppxProvisionedPackage -online
+    } else {
+    write-host "All clear, no provisioning package"
+    }
+if (Get-AppxprovisionedPackage -online |where-object displayname -eq "Microsoft.OutlookForWindows"){
+    write-host "The provisioning package STILL exists, manual intervention required"
+    exit
+    }
 write-host "Finished 4/5 - Remove new outlook" -foregroundcolor Black -backgroundcolor Yellow
 
 # Prevent it from coming back
