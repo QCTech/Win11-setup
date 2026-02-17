@@ -17,9 +17,9 @@ If ((Test-Path -Path $baseDirectory) -eq $false)
 }
 
 ### Disable passport
-Write-Host "Disabling MS Passport."
-New-Item -Path HKLM:\SOFTWARE\Policies\Microsoft -Name PassportForWork
-New-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\PassportForWork -Name Enabled -Value 0 -PropertyType DWORD
+#Write-Host "Disabling MS Passport."
+#New-Item -Path HKLM:\SOFTWARE\Policies\Microsoft -Name PassportForWork
+#New-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\PassportForWork -Name Enabled -Value 0 -PropertyType DWORD
 
 ### Disable Autorun/AutoPlay
 New-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer -Name NoDriveTypeAutoRun  -value 255 -type Dword
@@ -69,11 +69,11 @@ powercfg /change hibernate-timeout-ac 0
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # just checking, probably not required
-choco upgrade all -y
+%programdata%\chocolatey\bin\choco.exe upgrade all -y
 
 #Install base programs
 Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/defaultPrograms.config  -outfile $baseDirectory\defaultPrograms.config
-choco install $baseDirectory\defaultPrograms.config -y
+%programdata%\chocolatey\bin\choco.exe install $baseDirectory\defaultPrograms.config -y
 
 ### Remove Crap
     # Specific target for MS Teams
