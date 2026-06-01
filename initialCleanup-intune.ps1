@@ -30,35 +30,16 @@ powercfg /change disk-timeout-ac 30
 powercfg /change standby-timeout-ac 0
 powercfg /change hibernate-timeout-ac 0
 
-### Apply Windows updates
-    # Start BITS Service
-    Start-Service -Name "BITS"
-    
-    # Update Nuget
-	Install-PackageProvider Nuget -Force
-	
-    # Get and Install Win update PS module
-	Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-	Install-Module PSWindowsUpdate -Force
-
-	# Install MS and Win updates
-	Add-WUServiceManager -MicrosoftUpdate -Confirm:$false
-
-	# Run updates
-  # disabling this line as it seems to be causing me issues every now and again.
-  # RMM should force all updates. intune should force all updates. Do it manually for all other cases.
-  #	Install-WindowsUpdate -MicrosoftUpdate -AcceptAll | Out-File "$baseDirectory\microsoftUpdate.log" -Force 
-
 ### Install Chocolatey
-    # Download and Run the installer script direct from chocolatey.org
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-	# just checking, probably not required
-	choco upgrade all -y
+# just checking, probably not required
+    c:\ProgramData\chocolatey\bin\choco.exe upgrade all -y
 
-	#Install base programs
-    Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/intunePrograms.config  -outfile $baseDirectory\intunePrograms.config
-	choco install $baseDirectory\intunePrograms.config -y
+#Install base programs
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/defaultPrograms.config -OutFile (Join-Path $baseDirectory "defaultPrograms.config")
+    c:\ProgramData\chocolatey\bin\choco.exe install (Join-Path $baseDirectory "defaultPrograms.config") -y
+
 
 ### Remove Crap
     # Specific target for MS Teams
@@ -80,3 +61,20 @@ powercfg /change hibernate-timeout-ac 0
 
     # Then remove the system wide stuff so additional users don't get it
     Get-AppxProvisionedPackage -online | Where-Object packagename -notlike "Microsoft.WindowsStore*" | Where-Object packagename -notlike "Microsoft.WindowsCalculator*" | Where-Object packagename -notlike "Microsoft.MicrosoftStickyNotes*" | Where-Object packagename -notlike "Microsoft.Windows.Photos*" | Remove-AppxProvisionedPackage -online
+
+### Apply Windows updates
+    # Start BITS Service
+    Start-Service -Name "BITS"
+    
+    # Update Nuget
+	Install-PackageProvider Nuget -Force
+	
+    # Get and Install Win update PS module
+	Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+	Install-Module PSWindowsUpdate -Force
+
+	# Install MS and Win updates
+	Add-WUServiceManager -MicrosoftUpdate -Confirm:$false
+
+	# Run updates
+  	Install-WindowsUpdate -MicrosoftUpdate -AcceptAll | Out-File "$baseDirectory\microsoftUpdate.log" -Force 
