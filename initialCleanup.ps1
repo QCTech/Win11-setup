@@ -57,11 +57,11 @@ $host.ui.RawUI.WindowTitle = "QCT - Windows 11 Cleanup Script"
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # just checking, probably not required
-    & "$env:ProgramData\chocolatey\bin\choco.exe" upgrade all -y
+    c:\ProgramData\chocolatey\bin\choco.exe upgrade all -y
 
 #Install base programs
     Invoke-WebRequest -Uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/defaultPrograms.config -OutFile (Join-Path $baseDirectory "defaultPrograms.config")
-    & "$env:ProgramData\chocolatey\bin\choco.exe" install (Join-Path $baseDirectory "defaultPrograms.config") -y
+    c:\ProgramData\chocolatey\bin\choco.exe install (Join-Path $baseDirectory "defaultPrograms.config") -y
 
 ### Remove Crap
     $teams = Get-AppxPackage -Name MicrosoftTeams -AllUsers
