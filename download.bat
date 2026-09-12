@@ -8,7 +8,9 @@ echo -- Call the powershell script whilst also bypassing the execution policy so
 echo.
 echo It just works better than trying to call it by hand.
 echo.
-
+echo If you don't want that to happen then now would be a good time to hit ctrl + c
+pause
+echo. 
 REM Check for and create the directory
 if not exist "C:\qct" (
     echo Dir does not exist, creating it
