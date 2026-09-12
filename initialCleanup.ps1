@@ -53,6 +53,40 @@ $host.ui.RawUI.WindowTitle = "QCT - Windows 11 Cleanup Script"
     powercfg /change standby-timeout-ac 0
     powercfg /change hibernate-timeout-ac 0
 
+### Fix (disable...) Fast boot
+    # Setup a couple of variables
+    $theRegPath="HKLM:SYSTEM\CurrentControlSet\Control\Session Manager\Power"
+    $theRegKey="HiberbootEnabled"
+    $theRegType="DWord" 
+    $theRegValue = 0
+    
+    #Test if the path exists and create it if not
+    if (-not (test-path $theRegPath)){
+        write-host "Registry path does not exist, creating..." -foregroundcolor Black -backgroundcolor Yellow
+        New-Item -Path "$theRegPath" -Force
+    } else {
+        write-host "Registry path exists" -foregroundcolor Black -backgroundcolor Yellow
+    }
+    
+    # The path should now exist but check to be sure
+    if (test-path $theRegPath){
+        #Test if the key exists and create it if not, set it if it does
+        if (Get-ItemProperty -Path "$theRegPath" -Name "$theRegKey" -ErrorAction SilentlyContinue){
+            # It exists, tell the user and update the key
+            write-host "Registry Key exists, updating value..." -foregroundcolor Black -backgroundcolor Yellow
+            Set-ItemProperty -Path "$theRegPath" -Name "$theRegKey" -Value $theRegValue
+        } else {
+            # It does not exist, tell the user and create the key
+            write-host "Registry Key does not exist, creating..." -foregroundcolor Black -backgroundcolor Yellow
+            New-ItemProperty -Path "$theRegPath" -Name "$theRegKey" -Value "$theRegValue" -PropertyType "$theRegType" -Force
+        }
+    } else {
+        # For some reason the path did not create, tell the user
+        write-host "The Path was not created correctly, aborting" -foregroundcolor Black -backgroundcolor Yellow
+        $retval = 1
+    }
+    
+    write-host "Fixed fast boot" -foregroundcolor Black -backgroundcolor Yellow
 ### Install Chocolatey
     Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
