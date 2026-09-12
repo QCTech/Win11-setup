@@ -11,10 +11,14 @@ If ((Test-Path -Path $baseDirectory) -eq $false)
 	New-Item -Path $baseDirectory -ItemType directory
 }
 
+write-host "Downloading tactical.bat."
+Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/tactical.bat  -outfile $baseDirectory\tactical.bat
+
 write-host "Downloading initialCleanup.bat."
 Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/initialCleanup.bat  -outfile $baseDirectory\initialCleanup.bat
 
 write-host "Downloading initialCleanup-intune.bat."
 Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/initialCleanup-intune.bat  -outfile $baseDirectory\initialCleanup-intune.bat
 
-write-host "Please now run either initialCleanup.bat or initialCleanup-intune.bat file depending on what type of setup the customer has."
+write-host "Please now run tactical.bat followed by either initialCleanup.bat or initialCleanup-intune.bat file depending on what type of setup the customer has."
+write-host "(default to the none intune version as it does all the things)"
