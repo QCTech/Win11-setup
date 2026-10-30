@@ -13,6 +13,8 @@ If ((Test-Path -Path $baseDirectory) -eq $false)
 
 write-host "Downloading tactical.bat."
 Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/tactical.bat  -outfile $baseDirectory\tactical.bat
+write-host "Downloading tactical.ps1."
+Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/tactical.ps1  -outfile $baseDirectory\tactical.ps1
 
 write-host "Downloading initialCleanup.bat."
 Invoke-WebRequest -uri https://raw.githubusercontent.com/QCTech/Win11-setup/master/initialCleanup.bat  -outfile $baseDirectory\initialCleanup.bat
