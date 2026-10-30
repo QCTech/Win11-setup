@@ -1,5 +1,5 @@
 # author: https://github.com/bradhawkins85
-$innosetup = 'tacticalagent-v2.11.0-windows-amd64.exe'
+$innosetup = 'tacticalagent-v2.12.0-windows-amd64.exe'
 $api = '"https://api.tactical.qctech.co.uk"'
 $clientid = '2'
 $siteid = '4'
@@ -7,8 +7,8 @@ $agenttype = '"workstation"'
 $power = 0
 $rdp = 0
 $ping = 0
-$auth = '"db608ddfcc31a1e3f0216e8d7e224f503308cc3f391f06b37de931f579986b8c"'
-$downloadlink = 'https://github.com/amidaware/rmmagent/releases/download/v2.11.0/tacticalagent-v2.11.0-windows-amd64.exe'
+$auth = '"ec828b10fdf6459fd2ee37797dfdb2949d1d67f224ecece175d09d29c9bfd6ca"'
+$downloadlink = 'https://agents.tacticalrmm.com/api/v2/agents/?version=2.12.0&arch=amd64&token=f85d7560-318b-45ac-8d8e-bc2b9f54a891&plat=windows&api=api.tactical.qctech.co.uk'
 $apilink = $downloadlink.split('/')
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
